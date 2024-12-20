@@ -11,7 +11,7 @@ import java.util.Date;
 public class Movie {
     @Id
     @Column(name = "movie_id")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String ID;
 
     @Column(name = "movie_title")
