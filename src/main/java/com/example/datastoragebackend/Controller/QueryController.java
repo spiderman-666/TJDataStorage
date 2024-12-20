@@ -1,5 +1,7 @@
 package com.example.datastoragebackend.Controller;
 
+import com.example.datastoragebackend.Entity.Movie;
+import com.example.datastoragebackend.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,14 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api")
 public class QueryController {
     @Autowired
-    private QueryService queryService;
-
+    //private QueryService queryService;
+    private MovieService movieService;
     @PostMapping("/query")
+    public List<Movie> getMoviesByTitle(String title) {
+        return movieService.getMoviesByTitle(title);
+    }
+    /*
     public ResponseEntity<?> handleQuery(@RequestBody Map<String, Object> query) {
         System.out.println(query);
         String queryType = (String) query.get("type");
@@ -78,8 +85,8 @@ public class QueryController {
             return ResponseEntity.badRequest().body("查询失败: " + e.getMessage());
         }
 
-         */
-    }
+
+    }*/
 
 
 }
