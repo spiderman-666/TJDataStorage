@@ -34,4 +34,19 @@ public class Movie {
 
     @Column(name = "source_type")
     private String source_type;
+
+    /*
+    @Override
+    public String toString() {
+        return "{" +
+                "\"ID\":\"" + (ID != "null" ? ID : null) + '\"' +
+                ", \"title\":\"" + (title != "null" ? title : null) + '\"' +
+                ", \"score\":\"" + (score != "null" ? score : null) + '\"' +
+                ", \"reviewCount\":" + reviewCount +
+                ", \"releaseDate\":\"" + (releaseDate != "null" ? releaseDate : null) + '\"' +
+                ", \"duration\":\"" + (duration != "null" ? duration : null) + '\"' +
+                ", \"genre\":\"" + (genre != "null" ? genre : null) + '\"' +
+                ", \"source_type\":\"" + (source_type != "null" ? source_type : null) + '\"' +
+                '}';
+    }*/
 }

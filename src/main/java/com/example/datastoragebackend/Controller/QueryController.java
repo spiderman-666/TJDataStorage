@@ -16,29 +16,12 @@ import java.util.Objects;
 @RequestMapping("/api")
 public class QueryController {
     @Autowired
-    //private QueryService queryService;
     private MovieService movieService;
+
     @PostMapping("/query")
-    public List<Movie> getMoviesByTitle(String title) {
-        return movieService.getMoviesByTitle(title);
-    }
-    /*
-    public ResponseEntity<?> handleQuery(@RequestBody Map<String, Object> query) {
-        System.out.println(query);
+    public ResponseEntity<Map<String, Object>>  handleQuery(@RequestBody Map<String, Object> query) {
         String queryType = (String) query.get("type");
         Map<String, Object> result= new HashMap<>();
-        try {
-            if ("name".equals(queryType)) {
-                String movieName = (String) query.get("movieName");
-                result = queryService.queryByName(movieName);  // 调用 queryByName
-            } else {
-                throw new IllegalArgumentException("未知的查询类型: " + queryType);
-            }
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("查询失败: " + e.getMessage());
-        }
-        /*
         try {
             switch (queryType) {
                 case "time":
@@ -48,7 +31,10 @@ public class QueryController {
                     break;
                 case "name":
                     String movieName = (String) query.get("movieName");
-                    result = queryService.queryByName(movieName);
+                    // 查询电影信息
+                    List<Movie> movies = movieService.getMoviesByTitle(movieName);
+                    System.out.println("查询到的电影数据: " + movies);  // 确认是否查询到正确的电影数据
+                    result.put("movies", movies);
                     break;
                 case "director":
                     String directorName = (String) query.get("directorName");
@@ -79,14 +65,17 @@ public class QueryController {
                 default:
                     throw new IllegalArgumentException("未知的查询类型: " + queryType);
             }
+            result.put("message","查找成功");
+            System.out.println(result);
             return ResponseEntity.ok(result);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("查询失败: " + e.getMessage());
+            result.put("message", "查找失败");
+            return ResponseEntity.status(500).body(result);
         }
 
 
-    }*/
+    }
 
 
 }
