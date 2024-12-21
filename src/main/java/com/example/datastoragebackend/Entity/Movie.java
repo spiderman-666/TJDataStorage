@@ -18,10 +18,10 @@ public class Movie {
     private String title;
 
     @Column(name = "movie_score")
-    private float score;
+    private Float score;
 
     @Column(name = "review_count")
-    private int reviewCount;
+    private Integer reviewCount;
 
     @Column(name = "release_date")
     private Date releaseDate;

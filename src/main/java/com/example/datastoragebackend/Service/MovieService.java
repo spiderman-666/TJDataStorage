@@ -35,7 +35,7 @@ public class MovieService {
             map.put("title", movie.getTitle());
             map.put("duration", movie.getDuration());
             map.put("score", String.valueOf(movie.getScore()));
-            map.put("releaseDate", movie.getReleaseDate().toString());
+            map.put("releaseDate", movie.getReleaseDate() != null ? movie.getReleaseDate().toString() : null);
             map.put("genre", movie.getGenre());
             map.put("reviewCount", String.valueOf(movie.getReviewCount()));
             map.put("source_type", movie.getSource_type());
@@ -46,9 +46,9 @@ public class MovieService {
 
     //根据电影上映时间进行查询
     public List<Map<String, String>> getMoviesByTime(String startDate, String endDate) {
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            List<Movie> movies = movieDAO.findMoviesByReleaseDateBetween(ft.parse(endDate), ft.parse(startDate));
+            List<Movie> movies = movieDAO.findMoviesByReleaseDateBetween(ft.parse(startDate), ft.parse(endDate));
             return transferMovies(movies);
         } catch (ParseException e) {
             return new ArrayList<>();
@@ -70,7 +70,7 @@ public class MovieService {
 
     //根据电影评分查询
     public List<Map<String, String>> getMoviesByScore(float low, float high) {
-        List<Movie> movies = movieDAO.findByScoreBetween(high, low);
+        List<Movie> movies = movieDAO.findByScoreBetween(low, high);
         System.out.println(movies);
         return transferMovies(movies);
     }
@@ -105,7 +105,7 @@ public class MovieService {
         return transferMovies(movies);
     }
 
-    //根据演员类型查询
+    //根据导演和演员关系查询
     public List<Map<String, String>> getMoviesByActorAndDirector(String actor_name, String director_name) {
         Director director = directorDAO.findByName(director_name).orElse(null);
         Actor actor = actorDAO.findByName(actor_name).orElse(null);

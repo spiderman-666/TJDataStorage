@@ -2,6 +2,7 @@ package com.example.datastoragebackend.Controller;
 
 import com.example.datastoragebackend.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,14 +15,17 @@ public class MySQLController {
     private MovieService movieService;
 
     @PostMapping("/query")
-    public List<Map<String, String>> handleQuery(@RequestBody Map<String, String> query) {
+    public ResponseEntity<QueryResponse> handleQuery(@RequestBody Map<String, String> query) {
         String queryType = query.get("type");
         System.out.println(queryType);
         List<Map<String, String>> result = new ArrayList<>();
+        // 记录查询开始时间
+        long startTime = System.currentTimeMillis();
         switch (queryType) {
             case "time":
                 String startDate = query.get("startDate");
                 String endDate = query.get("endDate");
+                System.out.println(startDate);
                 result = movieService.getMoviesByTime(startDate, endDate);
                 System.out.println(result);
                 break;
@@ -63,8 +67,17 @@ public class MySQLController {
             default:
                 throw new IllegalArgumentException("未知的查询类型: " + queryType);
         }
-        System.out.println(result);
-        return result;
+        // 记录查询结束时间
+        long endTime = System.currentTimeMillis();
+        // 计算查询耗时
+        long duration = endTime - startTime;
+        // 将查询时间封装到 Map 中
+        Map<String, String> timeInfo = new HashMap<>();
+        timeInfo.put("queryTime", duration + " ms");
+
+        // 返回 QueryResponse 对象，其中包含查询结果和查询时间
+        QueryResponse queryResponse = new QueryResponse(result, timeInfo);
+        return ResponseEntity.ok(queryResponse);
     }
 }
 

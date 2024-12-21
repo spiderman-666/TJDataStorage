@@ -14,7 +14,7 @@ public class Neo4jController {
     @Autowired
     private MovieServiceN movieService;
 
-    @PostMapping("/query")
+    @PostMapping("/queries")
     public ResponseEntity<List<Map<String, String>>>  handleQuery(@RequestBody Map<String, String> query) {
         String queryType = query.get("type");
         System.out.println(queryType);
