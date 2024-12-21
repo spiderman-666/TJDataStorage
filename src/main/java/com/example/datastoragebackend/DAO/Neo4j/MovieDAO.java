@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+/*
 @Repository
 public interface MovieDAO extends Neo4jRepository<Movie,String> {
     List<Movie> findByTitle(String title);
 }
+*/

@@ -19,13 +19,15 @@ public class QueryController {
     @PostMapping("/query")
     public ResponseEntity<List<Map<String, String>>>  handleQuery(@RequestBody Map<String, String> query) {
         String queryType = query.get("type");
+        System.out.println(queryType);
         List<Map<String, String>> result= new ArrayList<>();
         try {
             switch (queryType) {
                 case "time":
                     String startDate = query.get("startDate");
                     String endDate = query.get("endDate");
-                    //result = queryByTime(startDate, endDate);
+                    result = movieService.getMoviesByTime(startDate, endDate);
+                    System.out.println(result);
                     break;
                 case "name":
                     String movieName = query.get("movieName");
@@ -35,7 +37,7 @@ public class QueryController {
                     break;
                 case "director":
                     String directorName = query.get("directorName");
-                    //result = queryByDirector(directorName);
+                    result = movieService.getMoviesByDirector(directorName);
                     break;
                 case "actor":
                     String actorName = query.get("actorName");
@@ -48,7 +50,9 @@ public class QueryController {
                     break;
                 case "category":
                     String categoryName = query.get("categoryName");
-                    //result = queryByCategory(categoryName);
+                    System.out.println(categoryName);
+                    result = movieService.getMoviesByGenre(categoryName);
+                    System.out.println(result);
                     break;
                 case "rating":
                     Integer minRating = Integer.parseInt(query.get("minRating"));

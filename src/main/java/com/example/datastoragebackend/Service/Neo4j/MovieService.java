@@ -1,5 +1,5 @@
 package com.example.datastoragebackend.Service.Neo4j;
-
+/*
 import com.example.datastoragebackend.DAO.Neo4j.MovieDAO;
 import com.example.datastoragebackend.Entity.Neo4j.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,3 +34,4 @@ public class MovieService {
 
 
 }
+*/
