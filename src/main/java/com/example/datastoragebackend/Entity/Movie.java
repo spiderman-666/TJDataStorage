@@ -18,13 +18,13 @@ public class Movie {
     private String title;
 
     @Column(name = "movie_score")
-    private String score;
+    private float score;
 
     @Column(name = "review_count")
     private int reviewCount;
 
     @Column(name = "release_date")
-    private String releaseDate;
+    private Date releaseDate;
 
     @Column(name = "duration")
     private String duration ;

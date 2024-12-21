@@ -14,7 +14,7 @@ public interface MovieDAO extends JpaRepository<Movie, String> {
 
     List<Movie> findByTitle(String title);//自动生成查询
 
-    //List<Movie> findByDirector(String director);
-
     List<Movie> findByGenre(String genre);
+
+    List<Movie> findByScoreBetween(float low, float high);
 }
