@@ -9,6 +9,8 @@ import com.example.datastoragebackend.Relation.MovieDirector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,7 +27,7 @@ public class MovieService {
     @Autowired
     private MovieDirectorDAO movieDirectorDAO;
 
-    public List<Map<String,String>> transferMovies (List<Movie> movies) {
+    public List<Map<String, String>> transferMovies(List<Movie> movies) {
         List<Map<String, String>> result = new ArrayList<>();
         for (Movie movie : movies) {
             Map<String, String> map = new HashMap<>();
@@ -43,9 +45,14 @@ public class MovieService {
     }
 
     //根据电影上映时间进行查询
-    public List<Map<String,String>> getMoviesByTime(String startDate, String endDate) {
-        List<Movie> movies = movieDAO.findMoviesByReleaseDateBetween(startDate, endDate);
-        return transferMovies(movies);
+    public List<Map<String, String>> getMoviesByTime(String startDate, String endDate) {
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            List<Movie> movies = movieDAO.findMoviesByReleaseDateBetween(ft.parse(startDate), ft.parse(endDate));
+            return transferMovies(movies);
+        } catch (ParseException e) {
+            return new ArrayList<>();
+        }
     }
 
     // 根据电影名查询所有电影信息
@@ -115,6 +122,6 @@ public class MovieService {
         for (MovieActor movieActorEntity : movieActor) {
             movieDAO.findById(movieActorEntity.getMovieId()).ifPresent(moviesA::add);
         }
-        return transferMovies(moviesD.stream().filter(moviesA::contains) .collect(Collectors.toList()));
+        return transferMovies(moviesD.stream().filter(moviesA::contains).collect(Collectors.toList()));
     }
 }
