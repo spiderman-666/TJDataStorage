@@ -48,7 +48,7 @@ public class MovieService {
     public List<Map<String, String>> getMoviesByTime(String startDate, String endDate) {
         SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd");
         try {
-            List<Movie> movies = movieDAO.findMoviesByReleaseDateBetween(ft.parse(startDate), ft.parse(endDate));
+            List<Movie> movies = movieDAO.findMoviesByReleaseDateBetween(ft.parse(endDate), ft.parse(startDate));
             return transferMovies(movies);
         } catch (ParseException e) {
             return new ArrayList<>();
@@ -70,7 +70,7 @@ public class MovieService {
 
     //根据电影评分查询
     public List<Map<String, String>> getMoviesByScore(float low, float high) {
-        List<Movie> movies = movieDAO.findByScoreBetween(low, high);
+        List<Movie> movies = movieDAO.findByScoreBetween(high, low);
         System.out.println(movies);
         return transferMovies(movies);
     }
